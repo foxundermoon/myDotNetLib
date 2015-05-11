@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 /// <summary>
 ///aspDBManager 的摘要说明
 /// </summary>
-/// namespace YYTWorkFlow
+/// change @ submodule
 /// 
 
 namespace FoxundermoonLib.Database
