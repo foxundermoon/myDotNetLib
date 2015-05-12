@@ -37,7 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MySql.Data, Version=6.3.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -49,13 +51,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\aspDBManager.cs" />
+    <Compile Include="Database\Mysql\MysqlHelper.cs" />
     <Compile Include="Diagnostics\MySqlTraceListener.cs" />
     <Compile Include="Diagnostics\TraceManager.cs" />
-    <Compile Include="EncryptUtil\EncryptUtil.cs" />
+    <Compile Include="Encrypt\EncryptUtil.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MySystem\KeyHook\KeyHooker.cs" />
     <Compile Include="MySystem\KeyHook\KeysChar.cs" />
+    <Compile Include="Utils\HashHelper.cs" />
+    <Compile Include="Utils\MyMd5.cs" />
+    <Compile Include="Utils\TimeHelper.cs" />
+    <Compile Include="XmppEx\Command\Cmd.cs" />
+    <Compile Include="XmppEx\Data\Class1.cs" />
+    <Compile Include="XmppEx\Data\Column.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="XmppEx\Data\ColumnCollection.cs" />
+    <Compile Include="XmppEx\Data\Command.cs" />
+    <Compile Include="XmppEx\Data\DicKeys.cs" />
+    <Compile Include="XmppEx\Data\Message.cs" />
+    <Compile Include="XmppEx\Data\Table.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
