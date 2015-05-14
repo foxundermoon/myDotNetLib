@@ -8,16 +8,17 @@ namespace FoxundermoonLib.XmppEx.Command
 {
    public class Cmd
     {
-       public const string GetOnlineUsers = "GetOnlineUsers";
-       public const string GetOnlineUsersResponse = "GetOnlineUsersResponse";
-       public const string GetUserTask = "GetUserTask";
-       public const string GetUserTaskResponse = "GetUserTaskResponse";
-       public const string GetUpLine = "GetUpLine";
-       public const string GetUpLineResponse = "GetUpLineResponse";
-       public const string GetDownLine = "GetDownLine";
-       public const string GetDownLineResponse = "GetDownLineResponse";
-       public static string UserLoginSuccess = "UserLoginSuccess";
-
-       public static string ErrorMessage = "ErrorMessage";
+       public const String GetOnlineUsers = "GetOnlineUsers";
+       public const String GetOnlineUsersResponse = "GetOnlineUsersResponse";
+       public const String GetUserTask = "GetUserTask";
+       public const String GetUserTaskResponse = "GetUserTaskResponse";
+       //public const String GetUpLine = "GetUpLine";
+       //public const String GetUpLineResponse = "GetUpLineResponse";
+       //public const String GetDownLine = "GetDownLine";
+       //public const String GetDownLineResponse = "GetDownLineResponse";
+       public const String UserLoginSuccess = "UserLoginSuccess";
+       public const String OnLineAtOtherPlace = "OnLineAtOtherPlace";
+       public const String UserOffLine = "UserOffLine";
+       public const String ErrorMessage = "ErrorMessage";
     }
 }

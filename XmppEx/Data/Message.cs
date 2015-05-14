@@ -57,8 +57,7 @@ namespace FoxundermoonLib.XmppEx.Data
             }
             set
             {
-                dataTable = null;
-
+                dataTable = value;
             }
         }
 
@@ -194,6 +193,20 @@ namespace FoxundermoonLib.XmppEx.Data
             }
             Propertites.Add(key, value);
         }
+        public string GetProperty(string key, string defaultValue)
+        {
+            var result = "";
+            if (Propertites.ContainsKey(key))
+                if (Propertites.TryGetValue(key, out result))
+                    return result;
+            return defaultValue;
+
+
+        }
+        public string GetProperty(string key)
+        {
+            return GetProperty(key,"");
+        }
         public bool SetJsonCommand(string command)
         {
             try
@@ -284,7 +297,6 @@ namespace FoxundermoonLib.XmppEx.Data
         }
         public void setDataTable(DataTable dt)
         {
-            DataTable = null;
             DataTable = new Table(dt);
         }
         public void setJsonTable(string jtable)
