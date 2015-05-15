@@ -24,11 +24,7 @@ namespace FoxundermoonLib.XmppEx.Command
        public const String SendTask = "SendTask";   // 下发任务
        public const String SendTaskResponse = "SendTaskResponse";  //收到下发任务
        public const String DataTable = "DataTable";  //数据库/表相关操作
-
-
-
-
-
+       public const String Response = "Response";  //数据库/表相关操作
 
     }
 }
