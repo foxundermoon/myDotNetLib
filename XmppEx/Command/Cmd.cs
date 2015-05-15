@@ -16,7 +16,7 @@ namespace FoxundermoonLib.XmppEx.Command
        //public const String GetUpLineResponse = "GetUpLineResponse";
        //public const String GetDownLine = "GetDownLine";
        //public const String GetDownLineResponse = "GetDownLineResponse";
-       public const String UserLoginSuccess = "UserLoginSuccess";
+       public const String UserLogin = "UserLogin";
        public const String OnLineAtOtherPlace = "OnLineAtOtherPlace";
        public const String UserOffLine = "UserOffLine";
        public const String ErrorMessage = "ErrorMessage";
