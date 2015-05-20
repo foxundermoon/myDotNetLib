@@ -28,12 +28,15 @@ namespace FoxundermoonLib.XmppEx.Data
                     }
                     else
                     {
-                        return null;
+                        id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5);
+                        Id = id;
+                        return id;
                     }
                 }
                 else
                 {
-                    return null;
+                    Id = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 5);
+                    return Id;
                 }
             }
             set
@@ -141,6 +144,9 @@ namespace FoxundermoonLib.XmppEx.Data
         }
         public JObject GetJsonObjectTable()
         {
+            try
+            {
+
             if (DataTable != null)
             {
 
@@ -149,6 +155,9 @@ namespace FoxundermoonLib.XmppEx.Data
                 {
                     JObject jsonColumn = new JObject();
                     jsonColumn.Add(DicKeys.name, c.ColumnName);
+                   
+                    if (c.DataType.Equals(typeof(MySql.Data.Types.MySqlDateTime)))
+                        c.DbType = "datetime(1)";
                     if (!string.IsNullOrWhiteSpace(c.DbType))
                         jsonColumn.Add(DicKeys.dbType, c.DbType);
                     columns.Add(jsonColumn);
@@ -157,9 +166,23 @@ namespace FoxundermoonLib.XmppEx.Data
                 foreach (DataRow r in DataTable.Rows)
                 {
                     JArray row = new JArray();
-                    foreach (var item in r.ItemArray)
+                    for (var i=0;i<r.ItemArray.Length ;i++)  //var item in r.ItemArray)
                     {
-                        row.Add(item);
+                        if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.Contains("datetime"))
+                        {
+                            if (r[i] is MySql.Data.Types.MySqlDateTime)
+                            {
+                                row.Add(((MySql.Data.Types.MySqlDateTime) r[i] ).Value.ToString("yyyy-MM-dd hh:mm:ss"));
+                            }
+                            else
+                            {
+                                row.Add(r[i].ToString());
+                            }
+                        }
+                        else
+                        {
+                            row.Add(r[i]);
+                        }
                     }
                     rows.Add(row);
                 }
@@ -170,6 +193,12 @@ namespace FoxundermoonLib.XmppEx.Data
                 jtable.Add(DicKeys.dataBase, DataTable.Database);
                 return jtable;
             }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("to json table:" +e.Message);
+            }
+
             return null;
         }
         public string ToJson()
@@ -264,6 +293,13 @@ namespace FoxundermoonLib.XmppEx.Data
 
 
 
+        }
+        public void SwitchDirection()
+        {
+            var to = ToUser;
+            var from = FromUser;
+            ToUser = from;
+            FromUser = to;
         }
         public bool SetJsonMessage(string message)
         {
