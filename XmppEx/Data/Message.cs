@@ -12,8 +12,30 @@ namespace FoxundermoonLib.XmppEx.Data
 {
     public class Message
     {
-        public string ToUser { get; set; }
-        public string FromUser { get; set; }
+        public User ToUser { get; set; }
+        public User FromUser { get; set; }
+
+        public bool HasError
+        {
+            get
+            {
+                return Propertites.Keys.Contains("error");
+            }
+        }
+        public string ErrorType
+        {
+            get
+            {
+                return GetProperty("error", "");
+            }
+        }
+        public string ErrorMessage
+        {
+            get
+            {
+                return GetProperty("errorMessage", "");
+            }
+        }
         public string Id
         {
             get
@@ -147,56 +169,56 @@ namespace FoxundermoonLib.XmppEx.Data
             try
             {
 
-            if (DataTable != null)
-            {
+                if (DataTable != null)
+                {
 
-                JArray columns = new JArray();
-                foreach (Column c in DataTable.DataColumns)
-                {
-                    JObject jsonColumn = new JObject();
-                    jsonColumn.Add(DicKeys.name, c.ColumnName);
-                   
-                    if (c.DataType.Equals(typeof(MySql.Data.Types.MySqlDateTime)))
-                        c.DbType = "datetime(1)";
-                    if (!string.IsNullOrWhiteSpace(c.DbType))
-                        jsonColumn.Add(DicKeys.dbType, c.DbType);
-                    columns.Add(jsonColumn);
-                }
-                JArray rows = new JArray();
-                foreach (DataRow r in DataTable.Rows)
-                {
-                    JArray row = new JArray();
-                    for (var i=0;i<r.ItemArray.Length ;i++)  //var item in r.ItemArray)
+                    JArray columns = new JArray();
+                    foreach (Column c in DataTable.DataColumns)
                     {
-                        if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.Contains("datetime"))
+                        JObject jsonColumn = new JObject();
+                        jsonColumn.Add(DicKeys.name, c.ColumnName);
+
+                        if (c.DataType.Equals(typeof(MySql.Data.Types.MySqlDateTime)))
+                            c.DbType = "datetime(1)";
+                        if (!string.IsNullOrWhiteSpace(c.DbType))
+                            jsonColumn.Add(DicKeys.dbType, c.DbType);
+                        columns.Add(jsonColumn);
+                    }
+                    JArray rows = new JArray();
+                    foreach (DataRow r in DataTable.Rows)
+                    {
+                        JArray row = new JArray();
+                        for (var i = 0; i < r.ItemArray.Length; i++)  //var item in r.ItemArray)
                         {
-                            if (r[i] is MySql.Data.Types.MySqlDateTime)
+                            if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.Contains("datetime"))
                             {
-                                row.Add(((MySql.Data.Types.MySqlDateTime) r[i] ).Value.ToString("yyyy-MM-dd hh:mm:ss"));
+                                if (r[i] is MySql.Data.Types.MySqlDateTime)
+                                {
+                                    row.Add(((MySql.Data.Types.MySqlDateTime)r[i]).Value.ToString("yyyy-MM-dd hh:mm:ss"));
+                                }
+                                else
+                                {
+                                    row.Add(r[i].ToString());
+                                }
                             }
                             else
                             {
-                                row.Add(r[i].ToString());
+                                row.Add(r[i]);
                             }
                         }
-                        else
-                        {
-                            row.Add(r[i]);
-                        }
+                        rows.Add(row);
                     }
-                    rows.Add(row);
+                    JObject jtable = new JObject();
+                    jtable.Add(DicKeys.columns, columns);
+                    jtable.Add(DicKeys.rows, rows);
+                    jtable.Add(DicKeys.name, DataTable.TableName);
+                    jtable.Add(DicKeys.dataBase, DataTable.Database);
+                    return jtable;
                 }
-                JObject jtable = new JObject();
-                jtable.Add(DicKeys.columns, columns);
-                jtable.Add(DicKeys.rows, rows);
-                jtable.Add(DicKeys.name, DataTable.TableName);
-                jtable.Add(DicKeys.dataBase, DataTable.Database);
-                return jtable;
-            }
             }
             catch (Exception e)
             {
-                Console.WriteLine("to json table:" +e.Message);
+                Console.WriteLine("to json table:" + e.Message);
             }
 
             return null;
@@ -234,7 +256,7 @@ namespace FoxundermoonLib.XmppEx.Data
         }
         public string GetProperty(string key)
         {
-            return GetProperty(key,"");
+            return GetProperty(key, "");
         }
         public bool SetJsonCommand(string command)
         {

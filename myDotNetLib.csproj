@@ -68,7 +68,6 @@
     <Compile Include="Utils\MyMd5.cs" />
     <Compile Include="Utils\TimeHelper.cs" />
     <Compile Include="XmppEx\Command\Cmd.cs" />
-    <Compile Include="XmppEx\Data\Class1.cs" />
     <Compile Include="XmppEx\Data\Column.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -79,6 +78,7 @@
     <Compile Include="XmppEx\Data\Table.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="XmppEx\Data\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
