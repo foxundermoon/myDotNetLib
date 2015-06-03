@@ -382,7 +382,7 @@ namespace FoxundermoonLib.XmppEx.Data
                             JToken type; ;
                             var success = c.TryGetValue(DicKeys.dbType, out type);
                             if (success)
-                                colum.DbType = (string)type;
+                                colum.DbType = type.ToString();
                             DataTable.DataColumns.Add(colum);
                         }
                     }
@@ -414,7 +414,11 @@ namespace FoxundermoonLib.XmppEx.Data
                             for (var i = 0; i < r.Count; i++)
                             {
                                 //row[i] = r[i];
-                                if (r[i].Type == JTokenType.Boolean)
+                                if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.ToLower().Contains("datetime"))
+                                {
+                                    row[i] =new MySql.Data.Types.MySqlDateTime( Convert.ToDateTime((string)r[i]));// new DateTime("vc");
+                                }
+                                else if (r[i].Type == JTokenType.Boolean)
                                 {
                                     row[i] = (bool)r[i];
 
