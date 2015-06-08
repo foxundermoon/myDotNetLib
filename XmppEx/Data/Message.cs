@@ -414,7 +414,11 @@ namespace FoxundermoonLib.XmppEx.Data
                             for (var i = 0; i < r.Count; i++)
                             {
                                 //row[i] = r[i];
-                                if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.ToLower().Contains("datetime"))
+                                if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.ToLower().Contains("now"))
+                                {
+                                    row[i] = new MySql.Data.Types.MySqlDateTime(DateTime.Now);
+                                }
+                                else if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.ToLower().Contains("datetime"))
                                 {
                                     row[i] =new MySql.Data.Types.MySqlDateTime( Convert.ToDateTime((string)r[i]));// new DateTime("vc");
                                 }
