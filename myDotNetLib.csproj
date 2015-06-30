@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Database\aspDBManager.cs" />
     <Compile Include="Database\Mysql\MysqlHelper.cs" />
+    <Compile Include="Database\Sql\SqlHelper.cs" />
     <Compile Include="Diagnostics\MySqlTraceListener.cs" />
     <Compile Include="Diagnostics\TraceManager.cs" />
     <Compile Include="Encrypt\EncryptUtil.cs" />
