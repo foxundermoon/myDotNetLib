@@ -243,6 +243,30 @@ namespace FoxundermoonLib.Database.Sql
             }
         }
 
+        public static DataTable ExecuteDataTable(string _connectionString, string cmdText, SqlParameter[] parameter)
+        {
+            string con =null;
+            if (string.IsNullOrEmpty(_connectionString))
+                con = _connectionString;
+            else
+                con = connectionString;
+            SqlConnection conn = new SqlConnection(con);
+            SqlCommand cmd = new SqlCommand();
+            try
+            {
+                PrepareCommand(cmd, conn, null, CommandType.Text, cmdText, parameter);
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+                da.SelectCommand = cmd;
+                da.Fill(ds);
+                return ds.Tables[0];
+            }
+            catch
+            {
+                conn.Close();
+                throw;
+            }
+        }
 
         public static DataTable ExecuteDataTable(string cmdText,SqlParameter[] parameter)
         {

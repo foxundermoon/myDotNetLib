@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\aspDBManager.cs" />
+    <Compile Include="Database\Sql\AspDBManager.cs" />
     <Compile Include="Database\Mysql\MysqlHelper.cs" />
     <Compile Include="Database\Sql\SqlHelper.cs" />
     <Compile Include="Diagnostics\MySqlTraceListener.cs" />
