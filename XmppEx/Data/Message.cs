@@ -396,16 +396,16 @@ namespace FoxundermoonLib.XmppEx.Data
                         JArray firstRow = (JArray)rows[0];
                         for (var i = 0; i < firstRow.Count; i++)
                         {
-                            if (firstRow[i].Type == JTokenType.String)
-                                DataTable.DataColumns[i].DataType = typeof(string);
-                            else if (firstRow[i].Type == JTokenType.Integer)
-                                DataTable.DataColumns[i].DataType = typeof(int);
-                            else if (firstRow[i].Type == JTokenType.Boolean)
-                                DataTable.DataColumns[i].DataType = typeof(bool);
-                            else if (firstRow[i].Type == JTokenType.Float)
-                                DataTable.DataColumns[i].DataType = typeof(float);
-                            else if (firstRow[i].Type == JTokenType.Null)
-                                DataTable.DataColumns[i].DataType = typeof(DBNull);
+                            //if (firstRow[i].Type == JTokenType.String)
+                            //    DataTable.DataColumns[i].DataType = typeof(string);
+                            //else if (firstRow[i].Type == JTokenType.Integer)
+                            //    DataTable.DataColumns[i].DataType = typeof(int);
+                            //else if (firstRow[i].Type == JTokenType.Boolean)
+                            //    DataTable.DataColumns[i].DataType = typeof(bool);
+                            //else if (firstRow[i].Type == JTokenType.Float)
+                            //    DataTable.DataColumns[i].DataType = typeof(float);
+                            //else if (firstRow[i].Type == JTokenType.Null)
+                            //    DataTable.DataColumns[i].DataType = typeof(DBNull);
                         }
                         foreach (JArray r in rows)
                         {

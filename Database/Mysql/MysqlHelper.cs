@@ -27,7 +27,18 @@ namespace FoxundermoonLib.Database.Mysql
 
         //数据库连接字符串(web.config来配置)，可以动态更改connectionString支持多数据库. 
         // public static string connectionString = ConfigurationManager.ConnectionStrings["ConnDB"].ConnectionString; 
-        public static string connectionString =getMysqlConnectionStr();
+        private static string _connectionString = getMysqlConnectionStr();
+        public static string connectionString
+        {
+            get
+            {
+                return _connectionString;
+            }
+            set
+            {
+                _connectionString = value;
+            }
+        }
         //public string m = ConfigurationManager.AppSettings["MySQL"]; 
         public MysqlHelper( ) { }
         #region ExecuteNonQuery
