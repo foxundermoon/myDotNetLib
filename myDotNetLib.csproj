@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="XmppEx\Data\ColumnCollection.cs" />
     <Compile Include="XmppEx\Data\Command.cs" />
+    <Compile Include="XmppEx\Data\DbTypeEx.cs" />
     <Compile Include="XmppEx\Data\DicKeys.cs" />
     <Compile Include="XmppEx\Data\Message.cs" />
     <Compile Include="XmppEx\Data\Table.cs">

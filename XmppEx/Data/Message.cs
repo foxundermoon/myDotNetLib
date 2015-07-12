@@ -7,6 +7,7 @@ using System.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
+using MySql.Data.Types;
 
 namespace FoxundermoonLib.XmppEx.Data
 {
@@ -393,35 +394,129 @@ namespace FoxundermoonLib.XmppEx.Data
                     if (rows.HasValues)
                     {
 
-                        JArray firstRow = (JArray)rows[0];
-                        for (var i = 0; i < firstRow.Count; i++)
-                        {
-                            //if (firstRow[i].Type == JTokenType.String)
-                            //    DataTable.DataColumns[i].DataType = typeof(string);
-                            //else if (firstRow[i].Type == JTokenType.Integer)
-                            //    DataTable.DataColumns[i].DataType = typeof(int);
-                            //else if (firstRow[i].Type == JTokenType.Boolean)
-                            //    DataTable.DataColumns[i].DataType = typeof(bool);
-                            //else if (firstRow[i].Type == JTokenType.Float)
-                            //    DataTable.DataColumns[i].DataType = typeof(float);
-                            //else if (firstRow[i].Type == JTokenType.Null)
-                            //    DataTable.DataColumns[i].DataType = typeof(DBNull);
-                        }
+                        //JArray firstRow = (JArray)rows[0];
+                        //for (var i = 0; i < firstRow.Count; i++)
+                        //{
+                        //if (firstRow[i].Type == JTokenType.String)
+                        //    DataTable.DataColumns[i].DataType = typeof(string);
+                        //else if (firstRow[i].Type == JTokenType.Integer)
+                        //    DataTable.DataColumns[i].DataType = typeof(int);
+                        //else if (firstRow[i].Type == JTokenType.Boolean)
+                        //    DataTable.DataColumns[i].DataType = typeof(bool);
+                        //else if (firstRow[i].Type == JTokenType.Float)
+                        //    DataTable.DataColumns[i].DataType = typeof(float);
+                        //else if (firstRow[i].Type == JTokenType.Null)
+                        //    DataTable.DataColumns[i].DataType = typeof(DBNull);
+                        //}
                         foreach (JArray r in rows)
                         {
 
                             var row = DataTable.NewRow();
                             for (var i = 0; i < r.Count; i++)
                             {
+                                string originDbType = DataTable.DataColumns[i].DbType;
+
+                                string colum = "费用";
+                                try
+                                {
+                                    if (DataTable.DataColumns[i].ColumnName == "费用")
+                                    {
+                                        var dddd = r[i];
+                                    }
+
+                                }
+                                catch { }
                                 //row[i] = r[i];
-                                if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.ToLower().Contains("now"))
+                                if (originDbType.IsTheseType("now"))
                                 {
                                     row[i] = new MySql.Data.Types.MySqlDateTime(DateTime.Now);
                                 }
-                                else if (!string.IsNullOrEmpty(DataTable.DataColumns[i].DbType) && DataTable.DataColumns[i].DbType.ToLower().Contains("datetime"))
+                                else if (originDbType.IsTheseType("datetime"))
                                 {
-                                    row[i] =new MySql.Data.Types.MySqlDateTime( Convert.ToDateTime((string)r[i]));// new DateTime("vc");
+                                    MySqlDateTime datetime = default(MySqlDateTime);
+                                    try
+                                    {
+                                        datetime = new MySql.Data.Types.MySqlDateTime(Convert.ToDateTime((string)r[i]));
+                                    }
+                                    catch
+                                    {
+
+                                    }
+                                    finally
+                                    {
+                                        row[i] = datetime;// new DateTime("vc");
+                                    }
                                 }
+                                else if (originDbType.IsTheseType("decimal") && (r[i].Type == JTokenType.String || r[i].Type == JTokenType.Null || r[i].Type == JTokenType.None))
+                                {
+
+                                    decimal decimalData = default(decimal);
+                                    try
+                                    {
+                                        decimalData = decimal.Parse((string)r[i]);
+                                    }
+                                    catch { }
+                                    finally
+                                    {
+                                        row[i] = decimalData;
+                                    }
+                                }
+                                else if (originDbType.IsTheseType("decimal") && r[i].Type == JTokenType.Integer)
+                                {
+
+                                    decimal decimalData = default(decimal);
+                                    try
+                                    {
+                                        decimalData = new decimal((long)r[i]);
+                                    }
+                                    catch { }
+                                    finally
+                                    {
+                                        row[i] = decimalData;
+                                    }
+                                }
+                                else if (originDbType.IsTheseType("int") && (r[i].Type == JTokenType.String || r[i].Type == JTokenType.Null || r[i].Type == JTokenType.None))
+                                {
+                                    long intdata = default(long);
+                                    try
+                                    {
+                                        intdata = long.Parse((string)r[i]);
+                                    }
+                                    catch { }
+                                    finally
+                                    {
+                                        row[i] = intdata;
+                                    }
+                                    
+                                }
+                                else if (originDbType.IsTheseType("int") && r[i].Type == JTokenType.Integer)
+                                {
+                                    long intdata = default(long);
+                                    try
+                                    {
+                                        intdata =(long) r[i];
+                                    }
+                                    catch { }
+                                    finally
+                                    {
+                                        row[i] = intdata;
+                                    }
+                                }
+                                else if (originDbType.IsTheseType("varchar"))
+                                {
+                                    string varchrData = null;
+                                    try
+                                    {
+                                        varchrData = (string)r[i];
+                                    }
+                                    catch { }
+                                    finally
+                                    {
+                                        row[i] = varchrData;
+                                    }
+
+                                }
+
                                 else if (r[i].Type == JTokenType.Boolean)
                                 {
                                     row[i] = (bool)r[i];
